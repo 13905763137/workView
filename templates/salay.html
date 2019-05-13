@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block head %}
+     <script src="{{ url_for("static",filename="echarts.common.min.js") }}"></script>
+    {% endblock %}
+{% block content %}
+<div id="container" style="height: 100%"></div>
+<script type="text/javascript">
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom);
+var app = {};
+option = null;
+app.title = '学历薪水图';
+data_source = [['学历', '大专', '本科', '硕士', '博士'], {{ g.salay1| tojson }}, {{ g.salay2| tojson }},
+                    {{ g.salay3| tojson }},{{ g.salay4| tojson }},{{ g.salay5| tojson }},
+];
+option = {
+    legend: {},
+    tooltip: {},
+    dataset: {
+        source: data_source
+    },
+    xAxis: {type: 'category'},
+    yAxis: {},
+    // Declare several bar series, each will be mapped
+    // to a column of dataset.source by default.
+    series: [
+        {type: 'bar'},
+        {type: 'bar'},
+        {type: 'bar'},
+        {type: 'bar'}
+    ]
+};
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+</script>>
+{% endblock %}
